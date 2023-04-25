@@ -28,11 +28,11 @@
 
 	var g_currentCircleControl = null;
 	//定义一个控件类
-	function CircleControl(color)
+	function CircleControl(color, y)
 	{
 	    var circleControl = this;
-	    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
-	    this.defaultOffset = new BMapGL.Size(20, 20);
+	    this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
+	    this.defaultOffset = new BMapGL.Size(20, y);
 
 	    //创建一个dom元素
 	    var div = document.createElement('div');
@@ -85,16 +85,16 @@
 	    return this.div;
 	}
 
-	var redCircleControl = new CircleControl('red');
+	var redCircleControl = new CircleControl('red', 20);
 	map.addControl(redCircleControl);
 
-	var greenCircleControl = new CircleControl('green');
+	var greenCircleControl = new CircleControl('green', 40);
 	map.addControl(greenCircleControl);
 
-	var blueCircleControl = new CircleControl('blue');
+	var blueCircleControl = new CircleControl('blue', 60);
 	map.addControl(blueCircleControl);
 
-	var yellowCircleControl = new CircleControl('yellow');
+	var yellowCircleControl = new CircleControl('yellow', 80);
 	map.addControl(yellowCircleControl);
 
 	map.addEventListener('click', function (e) {

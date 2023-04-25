@@ -59,7 +59,7 @@
 	    div.appendChild(buttonElement);
 
 	    var inputElement = document.createElement("input");
-	    inputElement.style.width = 100;
+	    inputElement.style.width = 50;
 	    inputElement.type = "number";
 	    inputElement.step = "0.1";
 	    inputElement.value = 10.0;
@@ -108,6 +108,7 @@
 	    if (g_currentCircleControl)
 	    {
 	        g_currentCircleControl.circle.setCenter(e.latlng);
+	        g_currentCircleControl = null;
 	    }
 	    //alert('点击位置经纬度：' + e.latlng.lng + ',' + e.latlng.lat);
 	});

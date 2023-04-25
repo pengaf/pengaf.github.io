@@ -30,6 +30,7 @@
 	//定义一个控件类
 	function CircleControl(color)
 	{
+	    var circleControl = this;
 	    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
 	    this.defaultOffset = new BMapGL.Size(20, 20);
 
@@ -45,7 +46,7 @@
 	    buttonElement.innerHTML = "按钮";
 	    buttonElement.addEventListener('click', function ()
 	    {
-	        g_currentCircleControl = this;
+	        g_currentCircleControl = circleControl;
 	    });
 
 	    div.appendChild(buttonElement);
@@ -99,7 +100,7 @@
 	map.addEventListener('click', function (e) {
 	    if (g_currentCircleControl)
 	    {
-	        g_currentCircleControl.circle.setCenter(new BMapGL.Point(e.latlng))
+	        g_currentCircleControl.circle.setCenter(e.latlng);
 	    }
 	    //alert('点击位置经纬度：' + e.latlng.lng + ',' + e.latlng.lat);
 	});

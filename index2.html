@@ -47,13 +47,14 @@
     {
         var points = new Array;
         var mCenter = lngLatToWebMercator(center);
-        for(let i = 0; i < 1000; ++i)
+        for(let i = 0; i < 10; ++i)
         {
             var theta = i/1000.0 * 2 * Math.PI;
             var x = Math.cos(theta) * radius + mCenter[0];
             var y = Math.sin(theta) * radius + mCenter[1];
             var pt = webMercatorToLngLat(x,y);
             points.push(new BMapGL.Point(pt[0],pt[1]));
+            console.log(pt);
         }
         return points;
     }

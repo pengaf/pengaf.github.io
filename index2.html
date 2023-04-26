@@ -46,7 +46,7 @@
     function calcCirclePoints(center, radius) 
     {
         var points = new Array;
-        var mCenter = lngLatToWebMercator(center);
+        var mCenter = lngLatToWebMercator(center.lng, center.lat);
         for(let i = 0; i < 10; ++i)
         {
             var theta = i/1000.0 * 2 * Math.PI;

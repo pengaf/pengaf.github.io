@@ -135,19 +135,19 @@
 	    return this.div;
 	}
 
-	CircleControl.prototype.updateCirclePoints() = function()
+	CircleControl.prototype.updateCirclePoints = function()
 	{
 	    var points = calcCirclePoints(this.circleCenter, this.circleRadius);
 	    this.circle.setPath(points);
 	}
 
-	CircleControl.prototype.setCircleCenter() = function(center)
+	CircleControl.prototype.setCircleCenter = function(center)
 	{
 	    this.circleCenter = center;
 	    this.updateCirclePoints()
 	}
 
-	CircleControl.prototype.setCircleRadius() = function(radius)
+	CircleControl.prototype.setCircleRadius = function(radius)
 	{
 	    this.circleRadius = radius;
 	    this.updateCirclePoints()

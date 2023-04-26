@@ -75,7 +75,12 @@
 	    var circleCenter = new BMapGL.Point(116.404, 39.915);
 	    var circleRadius = 10.0 * 1000;
 
-	    var circle = new BMapGL.Polyline([], {
+	    var circle = new BMapGL.Polyline(
+            [
+                new BMapGL.Point(116.404, 39.915),
+                new BMapGL.Point(116.404, 39.915),
+                new BMapGL.Point(116.404, 39.915),
+            ], {
 	        strokeColor: color,
 	        strokeWeight: 2,
 	        strokeOpacity: 0.5,

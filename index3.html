@@ -20,45 +20,6 @@
 </body>
 </html>
 <script type="text/javascript">
-
-    // 将经纬度转换为Web墨卡托坐标
-    function lngLatToWebMercator(lng, lat) {
-        const MAX_LATITUDE = 85.0511287798;
-        const R = 6378137;
-        const RADIAN_PER_DEGREE = 0.0174532925199433;
-        const lngRadian = lng * RADIAN_PER_DEGREE;
-        const latRadian = Math.max(Math.min(MAX_LATITUDE, lat), -MAX_LATITUDE) * RADIAN_PER_DEGREE;
-        const x = R * lngRadian;
-        const y = R * Math.log(Math.tan(Math.PI / 4 + latRadian / 2));
-        return [x, y];
-    }
-
-    // 将Web墨卡托坐标转换为经纬度
-    function webMercatorToLngLat(x, y) {
-        const MAX_LATITUDE = 85.0511287798;
-        const R = 6378137;
-        const RADIAN_PER_DEGREE = 0.0174532925199433;
-        const lng = x / R / RADIAN_PER_DEGREE;
-        const lat = 2 * Math.atan(Math.exp(y / R)) / Math.PI * 180 - 90;
-        return [lng, lat];
-    }
-
-    function calcCirclePoints(center, radius) 
-    {
-        var points = new Array;
-        var mCenter = lngLatToWebMercator(center.lng, center.lat);
-        for(let i = 0; i < 1000; ++i)
-        {
-            var theta = i/1000.0 * 2 * Math.PI;
-            var x = Math.cos(theta) * radius + mCenter[0];
-            var y = Math.sin(theta) * radius + mCenter[1];
-            var pt = webMercatorToLngLat(x,y);
-            points.push(new BMapGL.Point(pt[0],pt[1]));
-            console.log(pt);
-        }
-        return points;
-    }
-
     // GL版命名空间为BMapGL
     // 按住鼠标右键，修改倾斜角和角度
 	var map = new BMapGL.Map("allmap");    // 创建Map实例
@@ -73,15 +34,7 @@
 	    this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
 	    this.defaultOffset = new BMapGL.Size(20, y);
 
-	    var circleCenter = new BMapGL.Point(116.404, 39.915);
-	    var circleRadius = 10.0 * 1000;
-
-	    var circle = new BMapGL.Polyline(
-            [
-                new BMapGL.Point(116.404, 39.915),
-                new BMapGL.Point(116.404, 39.915),
-                new BMapGL.Point(116.404, 39.915),
-            ], {
+	    var circle = new BMapGL.Circle(new BMapGL.Point(116.404, 39.915), 10.0*1000, {
 	        strokeColor: color,
 	        strokeWeight: 2,
 	        strokeOpacity: 0.5,
@@ -112,9 +65,9 @@
 	    inputElement.value = 10.0;
 	    inputElement.name = "inputName";
 	    inputElement.placeholder = "千米";
-	    inputElement.circleControl = circleControl;
+	    inputElement.circle = circle;
 	    inputElement.addEventListener('input', function () {
-	        inputElement.circleControl.setCircleRadius(inputElement.value * 1000);
+	        inputElement.circle.setRadius(inputElement.value*1000);
 	    });
 
 	    // 添加到页面中
@@ -125,38 +78,18 @@
 	    this.buttonElement = buttonElement;
 	    this.inputElement = inputElement;
 	    this.circle = circle;
-	    this.circleCenter = circleCenter;
-	    this.circleRadius = circleRadius;
-	}
 
+	}
 	//通过JavaScript的prototype属性继承于BMap.Control
 	CircleControl.prototype = new BMapGL.Control();
 
-    //自定义控件必须实现自己的initialize方法，并且将控件的DOM元素返回
+	//自定义控件必须实现自己的initialize方法，并且将控件的DOM元素返回
 	//在本方法中创建个div元素作为控件的容器，并将其添加到地图容器中
 	CircleControl.prototype.initialize = function (map)
 	{
 	    map.getContainer().appendChild(this.div);
 	    map.addOverlay(this.circle);
 	    return this.div;
-	}
-
-	CircleControl.prototype.updateCirclePoints = function()
-	{
-	    var points = calcCirclePoints(this.circleCenter, this.circleRadius);
-	    this.circle.setPath(points);
-	}
-
-	CircleControl.prototype.setCircleCenter = function(center)
-	{
-	    this.circleCenter = center;
-	    this.updateCirclePoints()
-	}
-
-	CircleControl.prototype.setCircleRadius = function(radius)
-	{
-	    this.circleRadius = radius;
-	    this.updateCirclePoints()
 	}
 
 	var redCircleControl = new CircleControl('red', 100);
@@ -174,7 +107,7 @@
 	map.addEventListener('click', function (e) {
 	    if (g_currentCircleControl)
 	    {
-	        g_currentCircleControl.setCircleCenter(e.latlng);
+	        g_currentCircleControl.circle.setCenter(e.latlng);
 	        g_currentCircleControl = null;
 	    }
 	    //alert('点击位置经纬度：' + e.latlng.lng + ',' + e.latlng.lat);

@@ -28,13 +28,13 @@
 
 	var g_currentCircleControl = null;
 	//定义一个控件类
-	function CircleControl(color, y)
+	function CircleControl(color, ll, y)
 	{
 	    var circleControl = this;
 	    this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
 	    this.defaultOffset = new BMapGL.Size(20, y);
 
-	    var circle = new BMapGL.Circle(new BMapGL.Point(116.404, 39.915), 10.0*1000, {
+	    var circle = new BMapGL.Circle(ll, 10, {
 	        strokeColor: color,
 	        strokeWeight: 2,
 	        strokeOpacity: 0.5,
@@ -92,16 +92,16 @@
 	    return this.div;
 	}
 
-	var redCircleControl = new CircleControl('red', 100);
+	var redCircleControl = new CircleControl('red', new BMapGL.Point(116.404, 39.915), 100);
 	map.addControl(redCircleControl);
 
-	var greenCircleControl = new CircleControl('green', 200);
+	var greenCircleControl = new CircleControl('green', new BMapGL.Point(116.51446, 39.96589), 200);
 	map.addControl(greenCircleControl);
 
-	var blueCircleControl = new CircleControl('blue', 300);
+	var blueCircleControl = new CircleControl('blue', new BMapGL.Point(116.50486, 39.90252), 300);
 	map.addControl(blueCircleControl);
 
-	var yellowCircleControl = new CircleControl('yellow', 400);
+	var yellowCircleControl = new CircleControl('black', new BMapGL.Point(116.50946, 39.96924), 400);
 	map.addControl(yellowCircleControl);
 
 	map.addEventListener('click', function (e) {

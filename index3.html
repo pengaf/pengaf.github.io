@@ -34,7 +34,7 @@
 	    this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
 	    this.defaultOffset = new BMapGL.Size(20, y);
 
-	    var circle = new BMapGL.Circle(ll, 10, {
+	    var circle = new BMapGL.Circle(ll, 0.1*1000, {
 	        strokeColor: color,
 	        strokeWeight: 2,
 	        strokeOpacity: 0.5,
@@ -62,7 +62,7 @@
 	    inputElement.style.width = 50;
 	    inputElement.type = "number";
 	    inputElement.step = "0.1";
-	    inputElement.value = 10.0;
+	    inputElement.value = 0.1;
 	    inputElement.name = "inputName";
 	    inputElement.placeholder = "千米";
 	    inputElement.circle = circle;
